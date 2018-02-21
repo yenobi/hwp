@@ -1,31 +1,18 @@
 class Element {
-    constructor(obj) {
-        this.data = obj; 
-        this.next = false;
-    }
-
-    addNext(el) {
-        this.next = el;
+    constructor(data) {
+        this.data = data || null; 
+        this.prev = null;
+        this.next = null;
     }
 }
 
 class List {
-    constructor() {
-        this.data = null;
-        this.prev = null;
-    }
+    constructor() {}
 
     append(data) {
-        if (this.data) {
-            const prev = {
-                data: this.data,
-                next: null
-            };
-            this.prev = prev;
-            this.data = data;
-        } else {
-            this.data = data;
-        }
+        const newest = new Element(data);
+        if (this.current) this.current.next = newest;
+        newest.prev = this.current;
+        this.current = newest;
     }
 }
-
