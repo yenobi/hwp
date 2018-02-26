@@ -33,3 +33,45 @@ describe('two way binding linked list', () => {
         expect(prev.prev.data).toBe('data 1');
     });
 });
+
+describe('iterator protocol', () => {
+    it('should have [Symbol iterator]', () => {
+        const list = new List();
+        const iterator = list[Symbol.iterator]();
+        expect(iterator).toBeTruthy();
+    });
+
+    it('manual invoking of iterator', () => {
+        const list = new List();
+        list.append('data 1');
+        list.append('data 2');
+        list.append('data 3');
+
+        const listIterator = list[Symbol.iterator]();
+        const firstIteration = listIterator.next();
+        listIterator.next();
+        listIterator.next();
+        const lastIteration = listIterator.next();
+
+        expect(firstIteration.done).toBeFalsy();
+        expect(firstIteration.value).toBe('data 3');
+        
+        expect(lastIteration.done).toBeTruthy();
+        expect(lastIteration.value).toBe(undefined);
+
+    });
+
+    it('for of operator', () => {
+        const list = new List();
+        list.append('data 1');
+        list.append('data 2');
+        list.append('data 3');
+        const result = [];
+        for (const element of list) {
+            result.push(element);
+        }
+        expect(result.length).toBe(3);
+        expect(result[0]).toBe('data 3');
+        expect(result[2]).toBe('data 1');
+    })
+})
