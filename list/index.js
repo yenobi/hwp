@@ -15,4 +15,27 @@ class List {
         newest.prev = this.current;
         this.current = newest;
     }
+
+    [Symbol.iterator]() {
+        let current = this.current;
+
+        return {
+            next: () => {
+               while(current) {
+                   const data = current.data;
+                   current = current.prev;
+                   return {
+                       done: false,
+                       value: data
+                   }
+               } 
+
+                return {
+                    done: true,
+                    value: undefined
+                }
+
+            }
+        }
+    }
 }
