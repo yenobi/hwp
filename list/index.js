@@ -1,8 +1,8 @@
 class Element {
-    constructor(data) {
-        this.data = data || null; 
-        this.prev = null;
-        this.next = null;
+    constructor(data = null, prev = null, next = null) {
+        this.data = data;
+        this.prev = prev;
+        this.next = next;
     }
 }
 
@@ -43,6 +43,54 @@ class List {
     }
 
     insert(index, data) {
+        // todo: check if data exist
+       this.checkIfIndexIsValid(index);
+
+       if (index === this.length) return this.append(data);
+    
+       let iteratorIndex = this.length - 1;
+       for (const element of this) {
+            if (index === iteratorIndex) {
+                const current = element;
+                const previous = current.prev;
+
+                const newest = new Element(data, previous, current);
+
+                previous.next = newest;
+                current.prev = newest;
+
+                this.length++;
+
+                return;
+            }
+            iteratorIndex--;
+        }
+    }
+
+    // todo: with count prop
+    delete(index, count) {
+        this.checkIfIndexIsValid(index);
+
+        if (index === this.length) {
+            throw new Error('Too big index');
+        }
+
+        let iteratorIndex = this.length - 1;
+        for (const element of this) {
+            if (index === iteratorIndex) {
+                const prev = element.prev;
+                const next = element.next;
+
+                prev.next = next;
+                next.prev = prev;
+                this.length--;
+            }
+            iteratorIndex--;
+        }
+    }
+
+    // private metohd
+    checkIfIndexIsValid(index) {
         if(index < 0) {
            throw new Error('Index can not be negative');
         }
@@ -50,28 +98,17 @@ class List {
         if(index > this.length) {
             throw new Error('Too big index.');
         }
-
-        if(index === this.length) {
-            this.append(data);
-        } else {
-            let iteratorIndex = this.length - 1;
-            for (const element of list) {
-                if (index === iteratorIndex) {
-                    let current = element;
-                    let previous = current.prev;
-
-                    const newest = new Element(data);
-                    newest.prev = previous;
-                    newest.next = current;
-
-                    previous.next = newest;
-                    current.prev = newest;
-
-                    return this;
-                }
-                iteratorIndex--;
-            }
-        }
     }
 }
 
+// const list = new List();
+// list.append('data 1');
+// list.append('data 2');
+// list.append('data 3');
+// list.insert(1, 's');
+
+// console.dir(list, {depth: 5});
+
+// for (const el of list) {
+//     console.dir(el);
+// }

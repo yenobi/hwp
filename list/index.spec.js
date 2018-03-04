@@ -125,6 +125,9 @@ describe('insert method', () => {
 
     if('success inserting element', () => {
         list.insert(1, 'inserted data');
+
+        expect(list.length).toBe(4);
+
         for(const element of list) {
             if(element.data === 'data 2') {
                 expect(element.prev.data).toBe('inserted data');
@@ -136,4 +139,36 @@ describe('insert method', () => {
             }
         }
     });
+});
+
+describe('delete method', () => {
+    let list;
+
+    beforeEach(() => {
+        list = new List();
+        list.append('data 1');
+        list.append('data 2');
+        list.append('data 3');
+    });
+
+    it('error if index < 0', () => {
+        expect(() => (list.delete(-1))).toThrow(new Error('Index can not be negative'));
+    });
+
+    it('error if index > list.length', () => {
+        expect(() => (list.delete(11))).toThrow(new Error('Too big index.'));
+    });
+
+    it('success delete one element', () => {
+        list.delete(1);
+        expect(list.length).toBe(2);
+
+        for(const el of list) {
+            if(el.data === 'data 3') {
+                expect(el.prev.data).toBe('data 1');
+            } else if(el.data === 'data 1') {
+                expect(el.next.data).toBe('data 3');
+            }
+        }
+    })
 })
