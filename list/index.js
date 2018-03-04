@@ -25,7 +25,7 @@ class List {
         return {
             next: () => {
                while(current) {
-                   const data = current.data;
+                   const data = current;
                    current = current.prev;
                    return {
                        done: false,
@@ -41,4 +41,37 @@ class List {
             }
         }
     }
+
+    insert(index, data) {
+        if(index < 0) {
+           throw new Error('Index can not be negative');
+        }
+
+        if(index > this.length) {
+            throw new Error('Too big index.');
+        }
+
+        if(index === this.length) {
+            this.append(data);
+        } else {
+            let iteratorIndex = this.length - 1;
+            for (const element of list) {
+                if (index === iteratorIndex) {
+                    let current = element;
+                    let previous = current.prev;
+
+                    const newest = new Element(data);
+                    newest.prev = previous;
+                    newest.next = current;
+
+                    previous.next = newest;
+                    current.prev = newest;
+
+                    return this;
+                }
+                iteratorIndex--;
+            }
+        }
+    }
 }
+
