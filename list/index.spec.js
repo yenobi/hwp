@@ -34,6 +34,29 @@ describe('two way binding linked list', () => {
     });
 });
 
+describe('length of list', () => {
+    let list;
+    beforeEach(() => {
+        list = new List();
+    });
+
+    it('default length 0', () => {
+        expect(list.length).toBe(0);
+    });
+
+    it('length 1', () => {
+        list.append('data 1');
+        expect(list.length).toBe(1);
+    });
+
+    it('length 3', () => {
+        list.append('data 1');
+        list.append('data 2');
+        list.append('data 3');
+        expect(list.length).toBe(3);
+    });
+});
+
 describe('iterator protocol', () => {
     it('should have [Symbol iterator]', () => {
         const list = new List();

@@ -7,13 +7,16 @@ class Element {
 }
 
 class List {
-    constructor() {}
+    constructor() {
+        this.length = 0;
+    }
 
     append(data) {
         const newest = new Element(data);
         if (this.current) this.current.next = newest;
         newest.prev = this.current;
         this.current = newest;
+        this.length++;
     }
 
     [Symbol.iterator]() {
