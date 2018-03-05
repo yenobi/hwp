@@ -34,6 +34,24 @@ describe('two way binding linked list', () => {
     });
 });
 
+describe('prepend method', () => {
+    it('should add 1 item to the beginning of the list', () => {
+        const list = new List();
+        list.append('data 1');
+        list.append('data 2');
+        list.prepend('prepended data');
+
+        for (const element of list) {
+            if (element.data === 'data 1') {
+                expect(element.prev.data).toBe('prepended data');
+            } else if (element.data === 'prepended data') {
+                expect(element.next.data).toBe('data 1');
+            }
+        }
+
+    });
+});
+
 describe('length of list', () => {
     let list;
     beforeEach(() => {
@@ -171,4 +189,52 @@ describe('delete method', () => {
             }
         }
     })
-})
+});
+
+describe('copy and compare method', () => {
+    let list, listCopy;
+
+    beforeEach(() => {
+        list = new List();
+        list.append('data 1');
+        list.append('data 2');
+        list.append('data 3');
+        listCopy = list.copy();
+    });
+
+    it('manual compare of list and copyList', () => {
+        expect(listCopy.length).toBe(3);
+        expect(listCopy.current.data).toBe('data 3');
+        expect(listCopy.current.next).toBe(null);
+        expect(listCopy.current.prev.data).toBe('data 2');
+        expect(listCopy.current.prev.prev.data).toBe('data 1');
+        expect(listCopy.current.prev.prev.prev).toBe(null);
+    });
+
+    it('compare list and copyLit with custom method', () => {
+        expect(list.compare(listCopy)).toBeTruthy();
+    });
+
+    it('compare with shorter list', () => {
+        const shortList = new List();
+        shortList.append('short list data');
+        expect(list.compare(shortList)).toBeFalsy();
+    });
+
+    it('compate with longer list', () => {
+        const longerList = new List();
+        longerList.append('long list data');
+        longerList.append('long list data');
+        longerList.append('long list data');
+        longerList.append('long list data');
+        expect(list.compare(longerList)).toBeFalsy();
+    });
+
+    it('compate with equal length but different data inside', () => {
+        const diffList = new List();
+        diffList.append('diff data');
+        diffList.append('diff data');
+        diffList.append('diff data');
+        expect(list.compare(diffList)).toBeFalsy();
+    });
+});
