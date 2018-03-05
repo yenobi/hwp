@@ -189,4 +189,26 @@ describe('delete method', () => {
             }
         }
     })
-})
+});
+
+describe('copy method', () => {
+    it('manual compare of list and copyList', () => {
+        const list = new List();
+        list.append('data 1');
+        list.append('data 2');
+        list.append('data 3');
+
+        const listCopy = list.copy();
+
+        expect(listCopy.length).toBe(3);
+        expect(listCopy.current.data).toBe('data 3');
+        expect(listCopy.current.next).toBe(null);
+        expect(listCopy.current.prev.data).toBe('data 2');
+        expect(listCopy.current.prev.prev.data).toBe('data 1');
+        expect(listCopy.current.prev.prev.prev).toBe(null);
+    });
+
+    // it('compare list and copyLit with custom method', () => {
+
+    // });
+});

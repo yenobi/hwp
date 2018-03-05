@@ -24,6 +24,7 @@ class List {
             if (element.prev === undefined || element.prev === null) {
                 const newest = new Element(data, null, element);
                 element.prev = newest;
+                this.length++;
             }
         }
     }
@@ -98,6 +99,14 @@ class List {
         }
     }
 
+    copy() {
+        const listCopy = new List();
+        for (const element of this) {
+            element.next === null ? listCopy.append(element.data) : listCopy.prepend(element.data);
+        }
+        return listCopy;
+    }
+
     // private metohd
     checkIfIndexIsValid(index) {
         if(index < 0) {
@@ -114,10 +123,19 @@ class List {
 // list.append('data 1');
 // list.append('data 2');
 // list.append('data 3');
-// list.prepend('prepended');
+
+// const listCopy = list.copy();
+// // console.dir(list.current);
+// // list.prepend('prepended');
+// // listCopy.current.data = 'corrupted';
 
 // console.dir(list, {depth: 5});
+// console.log('---------');
+// // listCopy.current.data = 'corrupted';
+// console.dir(listCopy, {depth: 5});
 
+// console.log(list == listCopy);
 // for (const el of list) {
 //     console.dir(el);
 // }
+
