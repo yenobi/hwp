@@ -34,6 +34,24 @@ describe('two way binding linked list', () => {
     });
 });
 
+describe('prepend method', () => {
+    it('should add 1 item to the beginning of the list', () => {
+        const list = new List();
+        list.append('data 1');
+        list.append('data 2');
+        list.prepend('prepended data');
+
+        for (const element of list) {
+            if (element.data === 'data 1') {
+                expect(element.prev.data).toBe('prepended data');
+            } else if (element.data === 'prepended data') {
+                expect(element.next.data).toBe('data 1');
+            }
+        }
+
+    });
+});
+
 describe('length of list', () => {
     let list;
     beforeEach(() => {

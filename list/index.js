@@ -19,6 +19,15 @@ class List {
         this.length++;
     }
 
+    prepend(data) {
+        for (const element of this) {
+            if (element.prev === undefined || element.prev === null) {
+                const newest = new Element(data, null, element);
+                element.prev = newest;
+            }
+        }
+    }
+
     [Symbol.iterator]() {
         let current = this.current;
 
@@ -105,7 +114,7 @@ class List {
 // list.append('data 1');
 // list.append('data 2');
 // list.append('data 3');
-// list.insert(1, 's');
+// list.prepend('prepended');
 
 // console.dir(list, {depth: 5});
 
