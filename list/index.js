@@ -107,6 +107,23 @@ class List {
         return listCopy;
     }
 
+    compare(list) {
+        if (this.length !== list.length) return false;
+
+        let currentInitial = this.current;
+        let currentCompare = list.current;
+
+        // should handle not primitivs ? 
+        while(currentInitial.prev) {
+            if (currentInitial.data !== currentCompare.data) return false;
+
+            currentInitial = currentInitial.prev; 
+            currentCompare = currentCompare.prev;
+        }
+
+        return true;
+    }
+
     // private metohd
     checkIfIndexIsValid(index) {
         if(index < 0) {
@@ -125,6 +142,7 @@ class List {
 // list.append('data 3');
 
 // const listCopy = list.copy();
+// console.log(list.compare(listCopy));
 // // console.dir(list.current);
 // // list.prepend('prepended');
 // // listCopy.current.data = 'corrupted';

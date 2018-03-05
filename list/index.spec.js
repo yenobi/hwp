@@ -191,15 +191,18 @@ describe('delete method', () => {
     })
 });
 
-describe('copy method', () => {
-    it('manual compare of list and copyList', () => {
-        const list = new List();
+describe('copy and compare method', () => {
+    let list, listCopy;
+
+    beforeEach(() => {
+        list = new List();
         list.append('data 1');
         list.append('data 2');
         list.append('data 3');
+        listCopy = list.copy();
+    });
 
-        const listCopy = list.copy();
-
+    it('manual compare of list and copyList', () => {
         expect(listCopy.length).toBe(3);
         expect(listCopy.current.data).toBe('data 3');
         expect(listCopy.current.next).toBe(null);
@@ -208,7 +211,30 @@ describe('copy method', () => {
         expect(listCopy.current.prev.prev.prev).toBe(null);
     });
 
-    // it('compare list and copyLit with custom method', () => {
+    it('compare list and copyLit with custom method', () => {
+        expect(list.compare(listCopy)).toBeTruthy();
+    });
 
-    // });
+    it('compare with shorter list', () => {
+        const shortList = new List();
+        shortList.append('short list data');
+        expect(list.compare(shortList)).toBeFalsy();
+    });
+
+    it('compate with longer list', () => {
+        const longerList = new List();
+        longerList.append('long list data');
+        longerList.append('long list data');
+        longerList.append('long list data');
+        longerList.append('long list data');
+        expect(list.compare(longerList)).toBeFalsy();
+    });
+
+    it('compate with equal length but different data inside', () => {
+        const diffList = new List();
+        diffList.append('diff data');
+        diffList.append('diff data');
+        diffList.append('diff data');
+        expect(list.compare(diffList)).toBeFalsy();
+    });
 });
