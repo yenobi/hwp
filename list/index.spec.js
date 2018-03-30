@@ -204,11 +204,12 @@ describe('copy and compare method', () => {
 
     it('manual compare of list and copyList', () => {
         expect(listCopy.length).toBe(3);
-        expect(listCopy.current.data).toBe('data 3');
-        expect(listCopy.current.next).toBe(null);
-        expect(listCopy.current.prev.data).toBe('data 2');
-        expect(listCopy.current.prev.prev.data).toBe('data 1');
-        expect(listCopy.current.prev.prev.prev).toBe(null);
+        const {current} = listCopy;
+        expect(current.data).toBe('data 3');
+        expect(current.next).toBe(null);
+        expect(current.prev.data).toBe('data 2');
+        expect(current.prev.prev.data).toBe('data 1');
+        expect(current.prev.prev.prev).toBe(null);
     });
 
     it('compare list and copyLit with custom method', () => {
