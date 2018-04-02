@@ -12,9 +12,20 @@ class Tree {
         const node = new Node(parentNode, data)
         node.tree = this;
         
-        parentNode.first = node;
-        parentNode.last = node;
         parentNode.count++;
+        
+        if (parentNode.last) {
+            node.prev = parentNode.last;
+            parentNode.last.next = node;
+        }
+        
+        parentNode.last = node;
+        
+        if (!parentNode.first) {
+            parentNode.first = node;
+        }
+        
+        return node;
     }
 }
 
@@ -23,37 +34,11 @@ class Node {
         this.data = data;
         this.parent = parent;
         
-        this.fist = null;
+        this.first = null;
         this.last = null;
         this.prev = null;
         this.next = null;
         this.tree = null;
-        
-        // how to increase counter when adding child nodes ?
         this.count = 0;
     }
 }
-
-const tree = new Tree({name: 'root'});
-tree.add({name: 'n1'});
-
-console.dir(tree, {depth: null});
-
-// const n1 = new Node(null, 'n1');
-
-// const n2 = new Node(n1, 'n2');
-// const n3 = new Node(n1, 'n3');
-// const n4 = new Node(n1, 'n4');
-
-// console.dir(n2);
-
-
-// const st = new Node(n2, 'st1');
-// const st2 = new Node(st, 'st2');
-// const st3 = new Node(st, 'st3');
-// const st4 = new Node(st, 'st4');
-// const st5 = new Node(st, 'st5');
-// const st6 = new Node(st, 'st6');
-
-// console.dir(st2, {deps: 5})
-// console.dir(st2.parent);
